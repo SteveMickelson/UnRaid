@@ -1,0 +1,101 @@
+mqtt:
+  enabled: false
+
+detectors:
+  coral:
+    type: edgetpu
+    device: usb
+
+cameras:
+  front: # <------ Name the camera
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://smick777:Ydwi3sa2@192.168.68.25:554/h264Preview_01_main
+          roles:
+            - detect
+        - path: rtsp://smick777:Ydwi3sa2@192.168.68.25:554/h264Preview_01_main
+          roles:
+            - record
+    detect:
+      enabled: true # <---- disable detection until you have a working camera feed
+      width: 1280
+      height: 720
+    record:
+      enabled: true # <---- disable detection until you have a working camera feed
+    motion:
+      mask: 
+        0.996,0.295,0.855,0.163,0.732,0.124,0.602,0.096,0.597,0.07,0.482,0.033,0.439,0,1,0
+  driveway: # <------ Name the camera
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://smick777:Ydwi3sa2@192.168.68.24/11
+          roles:
+            - detect
+    detect:
+      enabled: false # <---- disable detection until you have a working camera feed
+      width: 1280
+      height: 720
+    motion:
+      mask: 
+        0,0.08,0.13,0.046,0.452,0.06,0.723,0.095,0.844,0.119,0.925,0.142,0.998,0.183,1,0,0,0
+  garage: # <------ Name the camera
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://smick777:Ydwi3sa2@192.168.68.47/11
+          roles:
+            - detect
+    detect:
+      enabled: false # <---- disable detection until you have a working camera feed
+      width: 1280
+      height: 720
+  shed: # <------ Name the camera
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://smick777:Ydwi3sa2@192.168.68.20/11
+          roles:
+            - detect
+    detect:
+      enabled: false # <---- disable detection until you have a working camera feed
+      width: 1280
+      height: 720
+    motion:
+      mask:
+        - 0.166,0.024,0.117,0.09,0.126,0.199,0.158,0.245,0.219,0.175,0.219,0.088
+        - 0.23,0.235,0.288,0.148,0.38,0.152,0.382,0.207,0.346,0.276,0.248,0.362
+  spare: # <------ Name the camera
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://smick777:Ydwi3sa2@192.168.68.60/11
+          roles:
+            - detect
+        - path: rtsp://smick777:Ydwi3sa2@192.168.68.60/11
+          roles:
+            - record
+    detect:
+      enabled: true # <---- disable detection until you have a working camera feed
+      width: 1280
+      height: 720
+    record:
+      enabled: true # <---- disable detection until you have a working camera feed
+go2rtc:
+  streams:
+    # front:
+    #   - rtsp://smick777:Ydwi3sa2@192.168.68.25:554/h264Preview_01_main
+    spare:
+      - rtsp://smick777:Ydwi3sa2@192.168.68.60/11
+camera_groups:
+  Overview:
+    order: 1
+    icon: LuBird
+    cameras:
+      - driveway
+      - front
+      - shed
+      - garage
+      - spare
+version: 0.14
